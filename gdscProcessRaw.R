@@ -118,9 +118,6 @@ saveRDS(gdsc_info, file=paste0(myOutPrefix, "_sens_info.rds"))
 saveRDS(gdsc_raw, file=paste0(myOutPrefix, "_sens_raw.rds"))
 
 
-mydirname <- paste0(myOutPrefix, "_raw_split")
-if(!dir.exists(mydirname)) dir.create(mydirname)
-
 sens.info <- gdsc_info
 sens.raw <- gdsc_raw
 
@@ -128,9 +125,15 @@ sens.raw <- gdsc_raw
 rownames(sens.info) <- sens.info$exp_id
 rownames(sens.raw) <- sens.info$exp_id
 
-sens.recalc <- PharmacoGx:::.calculateFromRaw(sens.raw, nthread=13)
+sens.raw.x <- parallel::splitIndices(nrow(sens.raw), floor(nrow(sens.raw)/1000))
 
-saveRDS(sens.recalc, file=paste0(myOutPrefix, "_sens_recalc.rds"))
+dir.create("/pfs/out/slices/")
 
+for(i in seq_along(sens.raw.x)){
+
+  slce <- sens.raw[sens.raw.x[[i]],,]
+  saveRDS(slce, file=paste0("/pfs/out/slices/gdsc_raw_sens_", i, ".rds"))
+
+}
 
 
