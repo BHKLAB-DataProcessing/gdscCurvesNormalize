@@ -46,8 +46,8 @@ gdsc_sens[,Viability := {
 # 	Viability <- (INTENSITY - background)/(control-background)
 # 	list(Viability = Viability)}, .(MASTER_CELL_ID, BARCODE) ]
 
-load("drugInfo.RData")
-load("cellInfo.RData")
+load("/pfs/drugInfo/drugInfo.RData")
+load("/pfs/cellInfo/cellInfo.RData")
 
 gdsc_sens[,drugid := ..drug.info[match(DRUG_ID, ..drug.info$DRUG_ID), "unique.drugid"]]
 gdsc_sens[,cellid := ..cell.info[match(COSMIC_ID, ..cell.info$COSMIC.identifier), "unique.cellid"]]
