@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
-library(PharmacoGx)
-library(PharmacoGxPrivate)
+# library(PharmacoGx)
+# library(PharmacoGxPrivate)
 library(data.table)
 # library(readxl)
 
@@ -57,7 +57,7 @@ gdsc_sens[,cellid := ..cell.info[match(COSMIC_ID, ..cell.info$COSMIC.identifier)
 
 # gdscv2_sens[grepl("L|R", x=TAG.1),]
 
-## Unique ID formulation will be: cellid_drugid_plate_seeding_dens_assay_duration_tag.1
+## Unique ID formulation will be: cellid_drugid_plate_seeding_dens_assay_duration
 ## Will add tag later because I want to average the different technical replicates with the same concentration 
 ## range but keep the ones with different ranges separate
 ## Changed my mind, using different tags differently seems unfair
