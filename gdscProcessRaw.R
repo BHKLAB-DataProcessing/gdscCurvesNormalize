@@ -189,9 +189,13 @@ gdsc_sens[,cellid := ..cell.info[match(COSMIC_ID, ..cell.info$COSMIC.identifier)
 
 gdsc_exps <- gdsc_sens[grepl("L|R", x=TAG.1),]
 rm(gdsc_sens); gc()
-
+gdsc_exps_2 <- gdsc_exps
+			   
 gdsc_exps[,exp_id := paste(cellid, drugid, DRUG_ID, BARCODE, "SeedDens", SEEDING_DENSITY, "assay", ASSAY, "dur", DURATION, sep="_")]
+gdsc_exps_2[,exp_id := paste(cellid, drugid, BARCODE, "SeedDens", SEEDING_DENSITY, "assay", ASSAY, "dur", DURATION, sep="_")]
 
+save(gdsc_exps_2, file="/pfs/out/gdsc_org_ids.RData")
+			   
 gdsc_raw <- gdsc_exps[,.(CONC,Viability, exp_id)]
 
 gdsc_raw_list <- split(gdsc_raw, by="exp_id")
